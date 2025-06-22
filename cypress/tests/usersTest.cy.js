@@ -53,4 +53,23 @@ describe("Users API Tests", { env: { hideCredentials: true } }, () => {
       expect(body).to.be.empty;
     });
   });
+  it("TC004 - POST /users", () => {
+    const newUser = {
+      name: "Michael Santos",
+      job: "Analista de Qualidade de Software / QA",
+    };
+
+    cy.api({
+      method: "POST",
+      url: `${API_URL}/users`,
+      headers: { "x-api-key": API_KEY },
+      body: newUser,
+    }).should(({ status, body }) => {
+      expect(status).to.eq(201);
+      expect(body).to.have.property("name", newUser.name);
+      expect(body).to.have.property("job", newUser.job);
+      expect(body).to.have.property("id");
+      expect(body).to.have.property("createdAt");
+    });
+  });
 });

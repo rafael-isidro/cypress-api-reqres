@@ -1,25 +1,42 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add("getUsers", () => {
+  cy.api({
+    method: "GET",
+    url: `${Cypress.env("API_URL")}/users`,
+    headers: { "x-api-key": Cypress.env("API_KEY") },
+  });
+});
+
+Cypress.Commands.add("getUser", (userId) => {
+  cy.api({
+    method: "GET",
+    url: `${Cypress.env("API_URL")}/users/${userId}`,
+    failOnStatusCode: false,
+    headers: { "x-api-key": Cypress.env("API_KEY") },
+  });
+});
+
+Cypress.Commands.add("postUser", (userData) => {
+  cy.api({
+    method: "POST",
+    url: `${Cypress.env("API_URL")}/users`,
+    headers: { "x-api-key": Cypress.env("API_KEY") },
+    body: userData,
+  });
+});
+
+Cypress.Commands.add("putUser", (userId, userData) => {
+  cy.api({
+    method: "PUT",
+    url: `${Cypress.env("API_URL")}/users/${userId}`,
+    headers: { "x-api-key": Cypress.env("API_KEY") },
+    body: userData,
+  });
+});
+
+Cypress.Commands.add("deleteUser", (userId) => {
+  cy.api({
+    method: "DELETE",
+    url: `${Cypress.env("API_URL")}/users/${userId}`,
+    headers: { "x-api-key": Cypress.env("API_KEY") },
+  });
+});

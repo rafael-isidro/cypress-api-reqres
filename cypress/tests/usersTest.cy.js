@@ -84,4 +84,13 @@ describe("Users API Tests", { env: { hideCredentials: true } }, () => {
       });
     });
   });
+  it("TC006 - DELETE /users/:id", () => {
+    cy.api({
+      method: "DELETE",
+      url: `${API_URL}/users/2`,
+      headers: { "x-api-key": API_KEY },
+    }).should(({ status }) => {
+      expect(status).to.eq(204);
+    });
+  });
 });

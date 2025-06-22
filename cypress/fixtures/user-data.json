@@ -1,0 +1,10 @@
+{
+    "validNewUser": {
+        "name": "Michael Santos",
+        "job": "Analista de Qualidade de Software / QA"
+    },
+    "validUpdateUser": {
+        "name": "Michael Silva",
+        "job": "Desenvolvedor de Software"
+    }
+}

@@ -54,22 +54,34 @@ describe("Users API Tests", { env: { hideCredentials: true } }, () => {
     });
   });
   it("TC004 - POST /users", () => {
-    const newUser = {
-      name: "Michael Santos",
-      job: "Analista de Qualidade de Software / QA",
-    };
-
-    cy.api({
-      method: "POST",
-      url: `${API_URL}/users`,
-      headers: { "x-api-key": API_KEY },
-      body: newUser,
-    }).should(({ status, body }) => {
-      expect(status).to.eq(201);
-      expect(body).to.have.property("name", newUser.name);
-      expect(body).to.have.property("job", newUser.job);
-      expect(body).to.have.property("id");
-      expect(body).to.have.property("createdAt");
+    cy.fixture("user-data").then((data) => {
+      cy.api({
+        method: "POST",
+        url: `${API_URL}/users`,
+        headers: { "x-api-key": API_KEY },
+        body: data.validNewUser,
+      }).should(({ status, body }) => {
+        expect(status).to.eq(201);
+        expect(body).to.have.property("name", data.validNewUser.name);
+        expect(body).to.have.property("job", data.validNewUser.job);
+        expect(body).to.have.property("id");
+        expect(body).to.have.property("createdAt");
+      });
+    });
+  });
+  it("TC005 - PUT /users/:id", () => {
+    cy.fixture("user-data").then((data) => {
+      cy.api({
+        method: "PUT",
+        url: `${API_URL}/users/2`,
+        headers: { "x-api-key": API_KEY },
+        body: data.validUpdateUser,
+      }).should(({ status, body }) => {
+        expect(status).to.eq(200);
+        expect(body).to.have.property("name", data.validUpdateUser.name);
+        expect(body).to.have.property("job", data.validUpdateUser.job);
+        expect(body).to.have.property("updatedAt");
+      });
     });
   });
 });

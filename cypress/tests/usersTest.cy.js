@@ -1,5 +1,3 @@
-import "cypress-plugin-api";
-
 describe("Users API Tests", { env: { hideCredentials: true } }, () => {
   it("TC001 - GET /users", () => {
     cy.fixture("user-data").then((data) => {
